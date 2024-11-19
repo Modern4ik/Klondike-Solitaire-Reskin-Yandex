@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using YG;
 public enum ScoreType { none, normal, vegas};
 public class MatchStatistics : MonoBehaviour {
 
@@ -18,6 +19,8 @@ public class MatchStatistics : MonoBehaviour {
 	private float totalTime;
 	private bool timeRun = true;
 	private ScoreType scoreType = ScoreType.normal;
+	private bool isRuEnv = YandexGame.EnvironmentData.language == "ru" 
+		|| YandexGame.EnvironmentData.browserLang == "ru";
 
 	public void StopTime()
 	{
@@ -133,23 +136,29 @@ public class MatchStatistics : MonoBehaviour {
 			float t = totalTime - startTime;
 			string stringTime = t > 99 * 60 ? "∞" : TimeToString.GetTimeStringMSFormat(totalTime - startTime);
 
-			timeText.text = "time: " + stringTime;
-		}
+            if (isRuEnv) timeText.text = "время: " + stringTime;
+			else timeText.text = "time: " + stringTime;
+        }
 	}
 
 
 	private void RefreshPointsText()
 	{
+		string scoreTxtValue = String.Empty;
+
+		if (isRuEnv) scoreTxtValue = "очки: ";
+		else scoreTxtValue = "score: ";
+
 		switch (scoreType)
 		{
 			case ScoreType.none:
 				scoreText.text = "";
 				break;
 			case ScoreType.normal:
-				scoreText.text = "score: " + score.ToString();
+				scoreText.text = scoreTxtValue + score.ToString();
 				break;
 			case ScoreType.vegas:
-				scoreText.text = "score: " + vegasScore.ToString() + "$";
+				scoreText.text = scoreTxtValue + vegasScore.ToString() + "$";
 				break;
 			default:
 				break;
@@ -157,7 +166,8 @@ public class MatchStatistics : MonoBehaviour {
 	}
 
 	private void RefreshMovesText()
-	{
-		movesText.text = "moves: " +  moves.ToString();
-	}   
+	{	
+		if (isRuEnv) movesText.text = "ходы: " + moves.ToString();
+		else movesText.text = "moves: " + moves.ToString();
+    }   
 }
