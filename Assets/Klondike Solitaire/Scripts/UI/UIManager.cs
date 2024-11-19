@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
+using YG;
 
 public class UIManager : MonoBehaviour {
 
@@ -23,6 +24,7 @@ public class UIManager : MonoBehaviour {
 
 	public void ResetGameState()
 	{
+		YandexGame.FullscreenShow();
 		BroadcastMessage("ResetState");
 		animationQueueController.ResetState();
 	}

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using YG;
 
 public class BoardManager : MonoBehaviour {
 	public static BoardManager instance { get; private set; }
@@ -77,16 +78,16 @@ public class BoardManager : MonoBehaviour {
 	public void NewGame() {
 		isReplay = false;
 		UIManager.instance.ResetGameState();
-	}
+    }
 
 	public void Replay() {
 		isReplay = true;
 		UIManager.instance.ResetGameState();
-	}
+    }
 
 	public void ContinueGame() {
 		probablyLostGameContinued = true;
-	}
+    }
 
 	private void ShuffleCards() {
 		do
